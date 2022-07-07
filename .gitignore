@@ -3,3 +3,7 @@ venv
 
 # Spreadsheets
 spreadsheets
+xl_spreadsheets
+
+build
+dist
