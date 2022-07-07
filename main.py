@@ -4,6 +4,17 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 import pandas as pd
+from datetime import datetime
+import os 
+import sys
+
+application_path = os.path.dirname(sys.executable)
+
+# Gets the current time 
+now = datetime.now()
+# Converts time to string format
+# Creating a format that is dd/mmm/yyyy
+day_month_year = now.strftime("%d%m%Y")
 
 # Add the link to the website you want to scrape
 website = "https://www.thesun.co.uk/"
@@ -38,6 +49,8 @@ my_dict= {'title': titles, 'subtitle': subtitles, 'link': links}
 
 # Converts all the lists into columns in an excel spreadsheet.
 df_headlines = pd.DataFrame(my_dict)
-df_headlines.to_excel('spreadsheets/headlines-headless.xlsx')
+file_name = f'headline-{day_month_year}.xlsx'
+final_path = os.path.join(application_path, file_name)
+df_headlines.to_excel(final_path)
 
 driver.quit()
