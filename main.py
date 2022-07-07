@@ -1,6 +1,7 @@
 '''My python test playground'''
 
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 import pandas as pd
 
@@ -8,8 +9,11 @@ import pandas as pd
 website = "https://www.thesun.co.uk/"
 path = "/Users/timl/Desktop/chromedriver"
 
+options = Options()
+options.headless = True
+
 service = Service(executable_path=path)
-driver = webdriver.Chrome(service=service)
+driver = webdriver.Chrome(service=service, options=options)
 driver.get(website)
 
 # Get the XPath for the container that holds the information you would like. 
@@ -31,8 +35,9 @@ for container in containers:
     links.append(link)
 
 my_dict= {'title': titles, 'subtitle': subtitles, 'link': links}
+
 # Converts all the lists into columns in an excel spreadsheet.
 df_headlines = pd.DataFrame(my_dict)
-df_headlines.to_excel('spreadsheets/headlines.xlsx', sheet_name='The Sun')
+df_headlines.to_excel('spreadsheets/headlines-headless.xlsx')
 
 driver.quit()
